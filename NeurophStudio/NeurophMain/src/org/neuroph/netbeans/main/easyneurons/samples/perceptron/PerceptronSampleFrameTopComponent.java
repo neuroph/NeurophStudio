@@ -41,7 +41,7 @@ public final class PerceptronSampleFrameTopComponent extends TopComponent implem
     private static final String PREFERRED_ID = "PerceptronSampleFrameTopComponent";
 
     public PerceptronSampleFrameTopComponent() {
-        initComponents();   
+        initComponents();
         setName(NbBundle.getMessage(PerceptronSampleFrameTopComponent.class, "CTL_PerceptronSampleFrameTopComponent"));
         setToolTipText(NbBundle.getMessage(PerceptronSampleFrameTopComponent.class, "HINT_PerceptronSampleFrameTopComponent"));
 //        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
@@ -236,10 +236,10 @@ public final class PerceptronSampleFrameTopComponent extends TopComponent implem
         }
         trainingSet.setLabel("PerceptronSampleTrainingSet");
 
-        trainingSet.addRow(new DataSetRow(new double[]{0, 0}, outputs[0]));
-        trainingSet.addRow(new DataSetRow(new double[]{1, 0}, outputs[1]));
-        trainingSet.addRow(new DataSetRow(new double[]{0, 1}, outputs[2]));
-        trainingSet.addRow(new DataSetRow(new double[]{1, 1}, outputs[3]));
+        trainingSet.add(new DataSetRow(new double[]{0, 0}, outputs[0]));
+        trainingSet.add(new DataSetRow(new double[]{1, 0}, outputs[1]));
+        trainingSet.add(new DataSetRow(new double[]{0, 1}, outputs[2]));
+        trainingSet.add(new DataSetRow(new double[]{1, 1}, outputs[3]));
 
         neuralNetAndDataSet.setDataSet(trainingSet);
 

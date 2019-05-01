@@ -17,7 +17,7 @@ public class StockPredictionHelper {
         public static DataSet createTrainingSet(String trainingLabel, double normScale, int memory, int frequency, int stepsAhead) {
             DataSet trainingSet = new DataSet(memory, stepsAhead);
             trainingSet.setLabel(trainingLabel);
-            
+
             // get stock data
             List<Double> stockData = StockPredictionManager.getInstance().getStockData();
 
@@ -25,7 +25,7 @@ public class StockPredictionHelper {
             for (int i = 0; i < stockData.size() - memory - stepsAhead; i++) {
                 double[] input = new double[memory];
                 double[] output = new double[stepsAhead];
-                
+
                 // get input vector
                 int inputColCounter = 0;
                 for (int j = i; j < i + memory*frequency; j += frequency) {
@@ -34,13 +34,13 @@ public class StockPredictionHelper {
                         inputColCounter++;
                     }
                 }
-                
+
                 // get output vector - this works only for output vector with one output value - where stepsAhead == 1
                 int outputColCounter = 0;
-                //for (int k = i; k < i + memory * frequency; k += frequency) { 
+                //for (int k = i; k < i + memory * frequency; k += frequency) {
                     if (i + memory * frequency < stockData.size()) {
                         output[outputColCounter] = stockData.get(i + memory * frequency) / normScale;
-                        trainingSet.addRow(new DataSetRow(input, output));
+                        trainingSet.add(new DataSetRow(input, output));
                     }
                 //}
             }
@@ -53,9 +53,9 @@ public class StockPredictionHelper {
         neuronsCount[0] = input;
         for(int i=0; i < hidden.size(); i++) {
             neuronsCount[i+1] = hidden.get(i).intValue();
-        }      
+        }
         neuronsCount[hidden.size()+1] = output;
-        
+
         NeuralNetwork neuralNet = new MultiLayerPerceptron(transferFunctionType, neuronsCount);
 	neuralNet.setLabel(label);
 

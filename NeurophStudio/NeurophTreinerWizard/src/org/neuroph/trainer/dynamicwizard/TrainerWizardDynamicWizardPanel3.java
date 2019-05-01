@@ -104,7 +104,7 @@ public class TrainerWizardDynamicWizardPanel3 implements WizardDescriptor.Panel<
                 for (int i = 0; i < splitTsp.length; i++) {
                     trainingSetPercents[i] = Integer.parseInt(splitTsp[i].trim());
                 }
-                
+
                 int maxIterations = Integer.parseInt( SimplePanel.getPanel().getMaxIterationsField().getText().trim());
                 double maxError = Double.parseDouble( SimplePanel.getPanel().getMaxErrorField().getText().trim());
                 int crossValRepeatCount = (Integer) SimplePanel.getPanel().getjSpinnerCV().getValue();
@@ -125,7 +125,7 @@ public class TrainerWizardDynamicWizardPanel3 implements WizardDescriptor.Panel<
                 int[] trainingSetPercents = createTrainingSetPercents();
 
                 int maxIterations = Integer.parseInt( AdvancePanel.getObject().getMaxIterationsField().getText().trim());
-                double maxError = Double.parseDouble( AdvancePanel.getObject().getMaxErrorField().getText().trim());                
+                double maxError = Double.parseDouble( AdvancePanel.getObject().getMaxErrorField().getText().trim());
                 int crossValRepeatCount = (Integer) AdvancePanel.getObject().getjSpinnerCV().getValue();
 
                 wiz.putProperty("learningRates", learningRates);
@@ -175,7 +175,7 @@ public class TrainerWizardDynamicWizardPanel3 implements WizardDescriptor.Panel<
         int max = (Integer) AdvancePanel.getObject().getjSpinnerHnMax().getValue();
         int step = (Integer) AdvancePanel.getObject().getjSpinnerHnStep().getValue();
 
-        int numEl = (int) (((max - min) / step) + 1);
+        int numEl = (int) (((max - min) / (float)step) + 1);
         int[] hn = new int[numEl];
         int j = 0;
         for (int i = min; i <= max; i += step) {

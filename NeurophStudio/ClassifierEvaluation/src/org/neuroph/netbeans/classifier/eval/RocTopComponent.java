@@ -29,7 +29,7 @@ import org.openide.util.NbBundle.Messages;
 )
 @TopComponent.Description(
         preferredID = "RocTopComponent",
-        //iconBase="SET/PATH/TO/ICON/HERE", 
+        //iconBase="SET/PATH/TO/ICON/HERE",
         persistenceType = TopComponent.PERSISTENCE_ALWAYS
 )
 @TopComponent.Registration(mode = "editor", openAtStartup = false)
@@ -47,7 +47,7 @@ import org.openide.util.NbBundle.Messages;
 public final class RocTopComponent extends TopComponent {
 
     NeuralNetAndDataSet neuralNetAndDataSet;
-    
+
     public RocTopComponent() {
         initComponents();
         setName(Bundle.CTL_RocTopComponent());
@@ -94,29 +94,29 @@ public final class RocTopComponent extends TopComponent {
     }
 
     private JFreeChart createChart() {
-        
-        // first create dataset 
+
+        // first create dataset
         final XYSeriesCollection plotDataset = new XYSeriesCollection();
         final XYSeries series = new XYSeries("ROC");
-        
+
         // iterate classification threshold 0 - 1
-        for(double threshold = 0; threshold <=1; threshold+=0.05) { 
+        for(double threshold = 0; threshold <=1; threshold+=0.05) {
             // for each threshold value salculate sensitivity and specificity 1-spec
             ClassificationMetrics metrics = calculateSensitivityAndSpecificity(threshold);
-                       
+
             double x = 1 - metrics.getSpecificity() ;//metrics.getFalsePositiveRate(); // FPR
             if (Double.isNaN(x)) x= 0;
             double y =  metrics.getSensitivity(); // TPR
             series.add(x, y);
             System.out.println("X: "+x+" Y:"+y);
         }
-        
+
         plotDataset.addSeries(series);
-        
+
         final JFreeChart chart = ChartFactory.createXYLineChart(
             "ROC",
-            "False Positive Rate", 
-            "True Positive Rate", 
+            "False Positive Rate",
+            "True Positive Rate",
             plotDataset,
             PlotOrientation.VERTICAL,
             true,
@@ -131,40 +131,37 @@ public final class RocTopComponent extends TopComponent {
         this.neuralNetAndDataSet = context;
     }
 
-    private ClassificationMetrics calculateSensitivityAndSpecificity(double threshold) {      
+    private ClassificationMetrics calculateSensitivityAndSpecificity(double threshold) {
        NeuralNetwork<?> neuralNet = neuralNetAndDataSet.getNetwork();
-       
+
        boolean isMultiClass = false;
-   
-       String[] classNames =  new String[neuralNet.getOutputsCount()]; // neuralNet.getOutputLabels()  
+
+       String[] classNames =  new String[neuralNet.getOutputsCount()]; // neuralNet.getOutputLabels()
        int i = 0;
-       
+
        for(Neuron n : neuralNet.getOutputNeurons()) {
-           classNames[i] = n.getLabel(); 
+           classNames[i] = n.getLabel();
            i++;
-       } 
+       }
 
         if (neuralNet.getOutputNeurons().size() > 1) isMultiClass = true;
-        
+
         Evaluation evaluation = new Evaluation();
         ClassifierEvaluator classifierEvaluator = null;
-        
-        if (isMultiClass) {            
+
+        if (isMultiClass) {
             classifierEvaluator = new ClassifierEvaluator.MultiClass(classNames);
-            // evaluator.setThreshold(threshold); does this works?          
-        } else {        
-            classifierEvaluator = new ClassifierEvaluator.Binary(threshold);            
+            // evaluator.setThreshold(threshold); does this works?
+        } else {
+            classifierEvaluator = new ClassifierEvaluator.Binary(threshold);
         }
 
-        evaluation.addEvaluator(classifierEvaluator);  
-        evaluation.evaluateDataSet(neuralNetAndDataSet.getNetwork(), neuralNetAndDataSet.getDataSet());       
-                                    
-        ConfusionMatrix confusionMatrix = classifierEvaluator.getResult();  
-        ClassificationMetrics[] metrics = ClassificationMetrics.createFromMatrix(confusionMatrix);         
-        
+        evaluation.addEvaluator(classifierEvaluator);
+        evaluation.evaluate(neuralNetAndDataSet.getNetwork(), neuralNetAndDataSet.getDataSet());
+
+        ConfusionMatrix confusionMatrix = classifierEvaluator.getResult();
+        ClassificationMetrics[] metrics = ClassificationMetrics.createFromMatrix(confusionMatrix);
+
         return metrics[0];
     }
-    
-    
-    
 }

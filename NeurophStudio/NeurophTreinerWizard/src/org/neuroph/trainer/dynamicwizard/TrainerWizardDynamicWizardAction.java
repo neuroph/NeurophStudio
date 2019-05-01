@@ -77,17 +77,17 @@ public final class TrainerWizardDynamicWizardAction implements ActionListener {
 
                         org.neuroph.training.NeurophWorkflow trainingProcess = new org.neuroph.training.NeurophWorkflow();
                         trainingProcess.addListener( TrainingProcessManager.getDefault() );
-                        
-                        //---------------------------------------------------------------------         
+
+                        //---------------------------------------------------------------------
                         // Generates different settings for neural network and training process as Stack<Properties>
                         // it would be great to load all these settings from XML file
                         // Creates process var: processPropertiesStack
                         // izgenerise sva podesavanja i stavi na stek. i onda se proces izvrsava za jedno po jedno podesavanje sa steka
                         WorkflowPropertiesGeneratorTask trainingPropertiesGeneratorTask = new WorkflowPropertiesGeneratorTask("trainingPropertiesGenerator", "trainingPropertiesStack");
-                        //set parameters for training process 
+                        //set parameters for training process
                         trainingPropertiesGeneratorTask.setLearningRates((double[]) wiz.getProperty("learningRates"));
                         trainingPropertiesGeneratorTask.setHiddenNeurons((int[]) wiz.getProperty("hiddenNeurons"));
-                        trainingPropertiesGeneratorTask.setMaxError((double) wiz.getProperty("maxError"));                        
+                        trainingPropertiesGeneratorTask.setMaxError((double) wiz.getProperty("maxError"));
                         trainingPropertiesGeneratorTask.setMaxIterations((Integer) wiz.getProperty("maxIterations"));
                         trainingPropertiesGeneratorTask.setTrainingSetPercents((int[]) wiz.getProperty("trainingSetPercents"));
                         trainingPropertiesGeneratorTask.setDataSet((DataSet) wiz.getProperty("dataSet"));
@@ -99,8 +99,8 @@ public final class TrainerWizardDynamicWizardAction implements ActionListener {
                         trainingProcess.addTask(dataLoaderTask);
 
                         // some list of preprocessing tasks - this shoul dbe optional along with settings
-                        NormalizationTask normalizationTask = new NormalizationTask("normalizationTask", "dataSet", new MaxNormalizer());
-                        trainingProcess.addTask(normalizationTask);
+//                        NormalizationTask normalizationTask = new NormalizationTask("normalizationTask", "dataSet", new MaxNormalizer());
+//                        trainingProcess.addTask(normalizationTask);
 
                         trainingProcess.addTask(new MultiLayerPerceptronFactoryTask("neuralNetFactory", "neuralNetworkProperties", "neuralNetwork"));
 
@@ -110,7 +110,7 @@ public final class TrainerWizardDynamicWizardAction implements ActionListener {
                         trainingProcess.addTask(new CrossValidationTask("crossValidationTask"));
                         // in first step do sampling task and generate subsets
                         // in each iteration pull out one and set training set from crossvalidation task
-                        
+
 
                         TrainingTask trainingTask = new TrainingTask("training", "neuralNetwork", "trainingSet");
                         trainingProcess.addTask(trainingTask);
@@ -120,22 +120,22 @@ public final class TrainerWizardDynamicWizardAction implements ActionListener {
                         trainingProcess.addTask(saveTask);
 
                         // store training result for later statistics calculation
-                        StoreTrainingResultTask storeTrainingResultTask = new StoreTrainingResultTask("storeTrainingResultTask"); 
+                        StoreTrainingResultTask storeTrainingResultTask = new StoreTrainingResultTask("storeTrainingResultTask");
                         trainingProcess.addTask(storeTrainingResultTask);
-                        
+
                         TestTask testTask = new TestTask("test", "neuralNetwork", "testSet"); // add test set here
                         trainingProcess.addTask(testTask);
-                        
-                        // loop crossvalidation task from here                       
+
+                        // loop crossvalidation task from here
                         trainingProcess.addTask(new LoopTask("crossValidationTask", 2)); // koliko puta izvretti korsvalidaciju
-                                
-                        // we should also do cross validation with several test sets here...                                                                                          
+
+                        // we should also do cross validation with several test sets here...
                        // trainingProcess.addTask(new LoopTask("setProperties", (Integer) wiz.getProperty("numIteration"))); // repeat while  there are settngs
-                        
+
                         // calculate overall statistics
                         StatsTask statsTask = new StatsTask("trainingStatistics"); // add test set here
-                        trainingProcess.addTask(statsTask);                                                
-                                           
+                        trainingProcess.addTask(statsTask);
+
                         trainingProcess.addTask(new ReportTask("report"));
                         trainingProcess.execute();
 

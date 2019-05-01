@@ -137,7 +137,7 @@ public class ViewManager implements
             trainVect.add(Math.random());
             trainVect.add(Math.random());
             DataSetRow te = new DataSetRow(trainVect);
-            dataSet.addRow(te);
+            dataSet.add(te);
         }
 
         NeuralNetAndDataSet controller = new NeuralNetAndDataSet(neuralNet, dataSet);
@@ -156,7 +156,7 @@ public class ViewManager implements
 
     public void licencePlateRecognitionSample() {
        TopComponent tc = WindowManager.getDefault().findTopComponent("LprTopComponent");
-        tc.open();                  
+        tc.open();
     }
 
     /**
@@ -209,49 +209,49 @@ public class ViewManager implements
 
                 String inputPattern = Double.toString(l2i) + " "
                         + Double.toString(l2j);
-                DataSetRow tEl = new DataSetRow(
+                DataSetRow dataRow = new DataSetRow(
                         inputPattern, outputPattern);
-                tSet.addRow(tEl);
+                tSet.add(dataRow);
 
                 inputPattern = Double.toString(l2i) + " "
                         + Double.toString(r2j);
-                tEl = new DataSetRow(inputPattern, outputPattern);
-                tSet.addRow(tEl);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
 
                 inputPattern = Double.toString(l2i) + " "
                         + Double.toString(right_intersection_j);
-                tEl = new DataSetRow(inputPattern, outputPattern);
-                tSet.addRow(tEl);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
 
                 inputPattern = Double.toString(r2i) + " "
                         + Double.toString(l2j);
-                tEl = new DataSetRow(inputPattern, outputPattern);
-                tSet.addRow(tEl);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
 
                 inputPattern = Double.toString(r2i) + " "
                         + Double.toString(r2j);
-                tEl = new DataSetRow(inputPattern, outputPattern);
-                tSet.addRow(tEl);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
 
                 inputPattern = Double.toString(r2i) + " "
                         + Double.toString(right_intersection_j);
-                tEl = new DataSetRow(inputPattern, outputPattern);
-                tSet.addRow(tEl);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
 
                 inputPattern = Double.toString(right_intersection_i) + " "
                         + Double.toString(l2j);
-                tEl = new DataSetRow(inputPattern, outputPattern);
-                tSet.addRow(tEl);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
 
                 inputPattern = Double.toString(right_intersection_i) + " "
                         + Double.toString(r2j);
-                tEl = new DataSetRow(inputPattern, outputPattern);
-                tSet.addRow(tEl);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
 
                 inputPattern = Double.toString(right_intersection_i) + " "
                         + Double.toString(right_intersection_j);
-                tEl = new DataSetRow(inputPattern, outputPattern);
-                tSet.addRow(tEl);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
 
                 outClass++;
             } // for j
@@ -321,7 +321,7 @@ public class ViewManager implements
             }
         }
         );
-        
+
         //showMessage("Started Multi Layer Perceptron with Backpropagation Sample");
 
     }

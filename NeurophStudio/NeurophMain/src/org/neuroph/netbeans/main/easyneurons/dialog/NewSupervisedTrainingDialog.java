@@ -9,17 +9,17 @@ import org.neuroph.nnet.learning.MomentumBackpropagation;
 
 /**
  *
- * New version of SupervisedTrainingDialog 
+ * New version of SupervisedTrainingDialog
  * added crossval and standard swing
- * 
+ *
  * @author zoran
  */
 public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
 
-    
+
      // ovo bi m u mozdatrebalo prosledjivati....?
      TrainingController trainingController;
-    
+
     /**
      * Creates new form BackPropagationTrainingDialog
      */
@@ -27,20 +27,20 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-    
+
     public NewSupervisedTrainingDialog(java.awt.Frame parent, boolean modal, NeuralNetAndDataSet neuralNetAndDataSet) {
         super(parent, modal);
         this.trainingController = new TrainingController(neuralNetAndDataSet);
         initComponents();
 
         // todo: we could get NeuralNetAndDataSet from lookup!!!!
-        
+
         if (this.trainingController.getNeuralNetAndDataSet().getNetwork().getLearningRule() instanceof MomentumBackpropagation) {
             momentumLabel.setEnabled(true);
             momentumField.setEnabled(true);
-        }    
-        
-    }    
+        }
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,12 +71,9 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         crossValidationCheckBox = new javax.swing.JCheckBox();
-        subsetDistField = new javax.swing.JTextField();
-        subsetCountRadioButton = new javax.swing.JRadioButton();
         subsetCountField = new javax.swing.JTextField();
-        subsetDistRadioButton = new javax.swing.JRadioButton();
         saveNetworksCheckBox = new javax.swing.JCheckBox();
-        allowRepetitionCheckBox = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.title")); // NOI18N
@@ -228,74 +225,39 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
             }
         });
 
-        subsetDistField.setText(org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.subsetDistField.text")); // NOI18N
-        subsetDistField.setEnabled(false);
-
-        buttonGroup1.add(subsetCountRadioButton);
-        org.openide.awt.Mnemonics.setLocalizedText(subsetCountRadioButton, org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.subsetCountRadioButton.text")); // NOI18N
-        subsetCountRadioButton.setEnabled(false);
-        subsetCountRadioButton.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                subsetCountRadioButtonItemStateChanged(evt);
-            }
-        });
-
         subsetCountField.setText(org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.subsetCountField.text")); // NOI18N
         subsetCountField.setEnabled(false);
-
-        buttonGroup1.add(subsetDistRadioButton);
-        org.openide.awt.Mnemonics.setLocalizedText(subsetDistRadioButton, org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.subsetDistRadioButton.text")); // NOI18N
-        subsetDistRadioButton.setEnabled(false);
-        subsetDistRadioButton.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                subsetDistRadioButtonItemStateChanged(evt);
-            }
-        });
 
         org.openide.awt.Mnemonics.setLocalizedText(saveNetworksCheckBox, org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.saveNetworksCheckBox.text")); // NOI18N
         saveNetworksCheckBox.setEnabled(false);
 
-        org.openide.awt.Mnemonics.setLocalizedText(allowRepetitionCheckBox, org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.allowRepetitionCheckBox.text")); // NOI18N
-        allowRepetitionCheckBox.setEnabled(false);
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.jLabel2.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(40, 40, 40)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(saveNetworksCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(crossValidationCheckBox)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(crossValidationCheckBox)
-                            .addComponent(subsetDistRadioButton)
-                            .addComponent(subsetCountRadioButton)
-                            .addComponent(saveNetworksCheckBox)
-                            .addComponent(allowRepetitionCheckBox)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(subsetCountField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(subsetDistField, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(105, Short.MAX_VALUE))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(subsetCountField, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(177, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(crossValidationCheckBox)
-                .addGap(18, 18, 18)
-                .addComponent(subsetCountRadioButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(subsetCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(subsetDistRadioButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(subsetDistField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(allowRepetitionCheckBox)
-                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(subsetCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(saveNetworksCheckBox)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -305,22 +267,17 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,9 +290,9 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(10, 10, 10)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -359,38 +316,25 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
 		trainingController.setLmsParams(learningRate, maxError, maxIterations);
 
 		LMS learningRule = (LMS) this.trainingController.getNeuralNetAndDataSet().getNetwork().getLearningRule();
-		 
+
 		if (learningRule instanceof MomentumBackpropagation) {
 			((MomentumBackpropagation)learningRule).setMomentum(momentum);
 		}
-                
+
                 if (crossValidationCheckBox.isSelected()) {
-                    trainingController.setUseCrossvalidation(true);                    
-                    
-                    if (subsetCountRadioButton.isSelected())
-                        trainingController.setNumberOfCrossvalSubsets(Integer.parseInt( subsetCountField.getText().trim()));
-                    else if (subsetDistRadioButton.isSelected()) {                        
-                        String[] distStr = subsetDistField.getText().trim().split(" ");
-                        int[] dist = new int[distStr.length];
-                        for(int i=0; i<distStr.length; i++)
-                            dist[i] = Integer.parseInt(distStr[i]);
-                                                
-                         trainingController.setCrossvalSubsetsDistribution(dist);
-                         trainingController.setAllowSamplesRepeat(allowRepetitionCheckBox.isSelected());
-                         trainingController.setSaveNetworks(saveNetworksCheckBox.isSelected());
-                    }
+                    trainingController.setUseCrossvalidation(true);
+                    trainingController.setSaveNetworks(saveNetworksCheckBox.isSelected());
+                    trainingController.setNumberOfCrossvalSubsets(Integer.parseInt( subsetCountField.getText().trim()));
                 }
-                
-                
-		
-                if (graphCheckBox.isSelected()) {                    
+
+                if (graphCheckBox.isSelected()) {
                     GraphFrameTopComponent graphFrame = ViewManager.getInstance().openErrorGraphFrame();
                     graphFrame.setTrainingController(trainingController);
                     graphFrame.observe(learningRule);
                 }
-                
+
                 trainingController.train();
-                
+
                 this.dispose();
     }//GEN-LAST:event_trainButtonActionPerformed
 
@@ -407,34 +351,17 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_limitIterationsCheckBoxStateChanged
 
     private void crossValidationCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_crossValidationCheckBoxItemStateChanged
-        if (crossValidationCheckBox.isSelected()) {            
+        if (crossValidationCheckBox.isSelected()) {
             graphCheckBox.setSelected(false);
             graphCheckBox.setEnabled(false);
-            subsetCountRadioButton.setEnabled(true);
-            subsetDistRadioButton.setEnabled(true);   
             saveNetworksCheckBox.setEnabled(true);
-            allowRepetitionCheckBox.setEnabled(true);
         } else {
             graphCheckBox.setEnabled(true);
             graphCheckBox.setSelected(true);
-            subsetCountRadioButton.setEnabled(false);
-            subsetDistRadioButton.setEnabled(false);     
             subsetCountField.setEnabled(false);
-            subsetDistField.setEnabled(false);
             saveNetworksCheckBox.setEnabled(false);
-            allowRepetitionCheckBox.setEnabled(false);
         }
     }//GEN-LAST:event_crossValidationCheckBoxItemStateChanged
-
-    private void subsetDistRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_subsetDistRadioButtonItemStateChanged
-       subsetDistField.setEnabled(true);
-       subsetCountField.setEnabled(false);
-    }//GEN-LAST:event_subsetDistRadioButtonItemStateChanged
-
-    private void subsetCountRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_subsetCountRadioButtonItemStateChanged
-        subsetCountField.setEnabled(true);
-        subsetDistField.setEnabled(false);
-    }//GEN-LAST:event_subsetCountRadioButtonItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -443,7 +370,7 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -480,12 +407,12 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox allowRepetitionCheckBox;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton closeButton;
     private javax.swing.JCheckBox crossValidationCheckBox;
     private javax.swing.JCheckBox graphCheckBox;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
@@ -501,9 +428,6 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
     private javax.swing.JLabel momentumLabel;
     private javax.swing.JCheckBox saveNetworksCheckBox;
     private javax.swing.JTextField subsetCountField;
-    private javax.swing.JRadioButton subsetCountRadioButton;
-    private javax.swing.JTextField subsetDistField;
-    private javax.swing.JRadioButton subsetDistRadioButton;
     private javax.swing.JButton trainButton;
     // End of variables declaration//GEN-END:variables
 }

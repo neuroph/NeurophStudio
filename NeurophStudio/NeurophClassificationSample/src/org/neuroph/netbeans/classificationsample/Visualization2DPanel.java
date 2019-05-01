@@ -30,7 +30,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
     private Image imageBuffer;
 
     private ArrayList<Point> dataSetPoints;//input points from training set
-    private double gridPoints[][];//points used to visualiza network output(answer) during training (defines the grid) 
+    private double gridPoints[][];//points used to visualiza network output(answer) during training (defines the grid)
 
     private int value; //indicator for mouse click button registration
 
@@ -45,7 +45,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
     private boolean pointDrawn = false; // true if points are manually drawn
 
     // ukinucemo padding nem potrebe, nek boji sve
-    private static int padding = 0; // bio je 10 
+    private static int padding = 0; // bio je 10
 
     public static Color[] neuronColor;
     public static Color[] neuronColorInverted;
@@ -172,7 +172,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
     public void setGridPoint(int x, int y, double val) {
 
         if (val != -1000) { // -1000 is initial value for all grid points
-            if (val > 1.0) {    // everything above 1 is 1 
+            if (val > 1.0) {    // everything above 1 is 1
                 val = 1.0;
             }
             if (val < 0) {      // everything below zero is zero
@@ -211,7 +211,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
 
     /*
      * Calculates scaled y value, needed for drawing lines on panel
-     * @param x 
+     * @param x
      */
     private double calculateY(double scalingCoefficient, int x, double w0, double w1, double w2) {
         return scalingCoefficient - scalingCoefficient * (-w1 * x / scalingCoefficient - w0) / w2;
@@ -221,7 +221,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
      * Calculates coordinates for drawing a single line on panel
      * w0, w1, w2 weights from the hidden neurons
      * returns coords for two point for drawing line
-     * 
+     *
      */
     private Point[] calculateWeightsLine(double w0, double w1, double w2) {
         int x1, x2, y1, y2;
@@ -248,12 +248,12 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
     public void prepareTrainingBuffers() {
         hiddenNeurons = neuralNetwork.getLayerAt(1).getNeurons();
         weights = new ArrayList<>();
-     
+
         for (int i = 0; i < hiddenNeurons.size() - 1; i++) {//iterates through neurons in hidden layer
-            List<Connection> conn = hiddenNeurons.get(i).getInputConnections(); //for each neuron, fetch input connections 
+            List<Connection> conn = hiddenNeurons.get(i).getInputConnections(); //for each neuron, fetch input connections
             Weight w1 = conn.get(selectedInputs[0]).getWeight(); // weight value from first selected input neuron
             Weight w2 = conn.get(selectedInputs[1]).getWeight(); // weight value from second selected input neuron
-            Weight w3 = conn.get(neuralNetwork.getLayerAt(0).getNeuronsCount() - 1).getWeight(); // weight value from bias            
+            Weight w3 = conn.get(neuralNetwork.getLayerAt(0).getNeuronsCount() - 1).getWeight(); // weight value from bias
 
             weights.add(w1);
             weights.add(w2);
@@ -266,7 +266,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
      * neurons (including bias)
      */
     private void visualizeLines2D() {
-        graphicsBuffer.setColor(Color.black); //sets line color       
+        graphicsBuffer.setColor(Color.black); //sets line color
 
         for (int i = 0; i < weights.size(); i += 3) {
             double w1 = weights.get(i).value; // weight value from first selected input neuron
@@ -309,7 +309,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
                     double w2 = weights.get(i + 1).value; // weight value from second selected input neuron
                     double w3 = weights.get(i + 2).value; // weight value from bias
 
-                    // kreiraj boju za odgovarajuci region    
+                    // kreiraj boju za odgovarajuci region
                     if (calculateY(scalingCoefficient, x, w3, w1, w2) > y + offset) {//membership function which separates 2D space with two colors
                         rgb += neuronColor[i/3].getRGB();
                         rgbCounter++;
@@ -322,7 +322,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
                 int rgbColor = (int) Math.round((Math.round(rgb / rgbCounter) + Math.round(irgb / irgbCounter)) / 2);
                 graphicsBuffer.setColor(new Color(rgbColor));//sets new fusionated color
                 graphicsBuffer.fillRect(x, y, 5, 5);
-               
+
             }
         }
     }
@@ -330,14 +330,14 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
     /*
      * This method enables visualization of neural network output
      * It is using gridPoints which is a matrix of grid points with values of the neural network outputs for each grid point
-     *    
+     *
      * Povrsine 10x10 su osnovne celije koje se koriste za bojenje pozadine
      *
      * grid points se crtaju na rastojanju 10x10
      */
     private void visualizeNetworkAnswer2D() {
         int x, y;
-        int size = 80; //bilo je 57  grid size 570x570 - on 10       
+        int size = 80; //bilo je 57  grid size 570x570 - on 10
         //  int size = panelSize / 10;
 
         //draws grid points, and colors background
@@ -349,7 +349,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
 
                     // create color depending on output/pint value
                     float r = (float) gridPoints[i][j];//assigning color for particular output value
-                    float b = 1 - r; //making a complement color                 
+                    float b = 1 - r; //making a complement color
                     graphicsBuffer.setColor(new Color(r, 0, b));//creating new color that combines previous two
 
                     // 1. popunjava pozadinu odgovarajucom bojom - ovo je glavno popunjavanje
@@ -359,7 +359,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
                         graphicsBuffer.fillRect(x - panelSize / 2, y - panelSize / 2, 10, 10); // 10, 10
                     }
 
-                    // 2. decide when to draw red or blue grid point depending on the 0.5 threshold   
+                    // 2. decide when to draw red or blue grid point depending on the 0.5 threshold
                     if (gridPoints[i][j] > 0.5) {// this is a treshold function, that separates one output from another
                         graphicsBuffer.setColor(Color.RED);
                     } else {
@@ -378,7 +378,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
     }
 
     /*
-     * Draws current mouse coordinates on the panel 
+     * Draws current mouse coordinates on the panel
      */
     private void drawHelpLine(int X, int Y, Graphics g) {
         DecimalFormat df = new DecimalFormat("#.####");//formats coordinates to maximum 4 decimal places
@@ -409,7 +409,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
         this.dataSet = dataSet;
         this.selectedInputs = selectedInputs;
         dataSetPoints.clear();//initially, all points are erased
-        initGridPoints();   // re initialize grid points if they are filled 
+        initGridPoints();   // re initialize grid points if they are filled
         repaint();//repainting the component - sta ce mi ova komponenta ovde? da bi obrisao sve?
 
         // Graphics g = getGraphics();
@@ -473,7 +473,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // panelSize = getHeight()-2*padding; // velicina prostora za crtanje je kvadrat dimenzija visina ovog panela - 2*padding      
+        // panelSize = getHeight()-2*padding; // velicina prostora za crtanje je kvadrat dimenzija visina ovog panela - 2*padding
         panelSize = 800;
 
         // initialize drawing buffer if needed - ovo treba reinicijalizovati prilikom resize-a
@@ -503,7 +503,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
                     break;
             }
         }
-        
+
         // draw axes
         if (positiveInputsOnly) {
             //draws coordinate axis lines and labels
@@ -547,9 +547,9 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
             graphicsBuffer.fillPolygon(new int[]{-panelSize / 2 + padding, -panelSize / 2 + padding + 15, -panelSize / 2 + padding + 15, -panelSize / 2 + padding},
                     new int[]{0, -7, 7, 0}, 4); // left
             graphicsBuffer.fillPolygon(new int[]{panelSize / 2 - padding, panelSize / 2 - padding - 15, panelSize / 2 - padding - 15, panelSize / 2 - padding},
-                    new int[]{0, -7, 7, 0}, 4);  // right          
+                    new int[]{0, -7, 7, 0}, 4);  // right
 
-         
+
             for (Point point : dataSetPoints) {
                 Point tempPoint = new Point();
                 tempPoint.x = point.x - (panelSize / 2 - padding);
@@ -623,7 +623,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
 
     /*
      * Transforms Decartes' x value to panel's value
-    
+
      * @param x x value/coord in decart system
      * @return Returns x pixel coord in this panel
      */
@@ -737,7 +737,7 @@ public class Visualization2DPanel extends javax.swing.JPanel implements Componen
                 if (dataSet == null) {
                     dataSet = new DataSet(2, 1);// if its first drawn point - todo: this must be changed!!!
                 }
-                dataSet.addRow(new DataSetRow(new double[]{transformFromPanelToDecartX(X), transformFromPanelToDecartY(Y)}, new double[]{button_value}));
+                dataSet.add(new DataSetRow(new double[]{transformFromPanelToDecartX(X), transformFromPanelToDecartY(Y)}, new double[]{button_value}));
                 Graphics g = getGraphics();
                 drawPoint(point, g); // samo ovdecrtam u glavni g jer treba da bude interaktivno
             }

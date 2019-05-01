@@ -31,9 +31,9 @@ public final class DecimalScaleNormalizationAction extends AbstractAction implem
     @Override
     public void actionPerformed(ActionEvent ev) {
        DataSet dataSet = context.getDataSet();
-       DecimalScaleNormalizer norm = new DecimalScaleNormalizer();
+       DecimalScaleNormalizer norm = new DecimalScaleNormalizer(dataSet);
        norm.normalize(dataSet);
-       
-       IOProvider.getDefault().getIO("Neuroph", false).getOut().println("Normalized data set " + dataSet.getLabel() + " using Decimal Scale normalization method");        
+
+       IOProvider.getDefault().getIO("Neuroph", false).getOut().println("Normalized data set " + dataSet.getLabel() + " using Decimal Scale normalization method");
     }
 }

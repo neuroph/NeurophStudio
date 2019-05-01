@@ -36,9 +36,9 @@ public final class MaxMinNormalizationAction  extends AbstractAction implements 
     @Override
     public void actionPerformed(ActionEvent ev) {
        DataSet dataSet = context.getDataSet();
-       MaxMinNormalizer norm = new MaxMinNormalizer();
+       MaxMinNormalizer norm = new MaxMinNormalizer(dataSet);
        norm.normalize(dataSet);
-       
+
        IOProvider.getDefault().getIO("Neuroph", false).getOut().println("Normalized data set " + dataSet.getLabel() + " using Max Min normalization method");
     }
 }

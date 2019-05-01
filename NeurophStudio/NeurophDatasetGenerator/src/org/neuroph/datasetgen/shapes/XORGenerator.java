@@ -35,8 +35,8 @@ public class XORGenerator extends DataSetGenerator {
                 desiredOutput[0] = 0;
             } else {
                 desiredOutput[0] = 1;
-            }              
-            dataSet.addRow(new DataSetRow(new double[]{randomX, randomY}, desiredOutput));
+            }
+            dataSet.add(new DataSetRow(new double[]{randomX, randomY}, desiredOutput));
         }
         dataSet.setColumnNames(new String[]{"X","Y"});
         dataSet.setLabel(toString());
@@ -47,7 +47,7 @@ public class XORGenerator extends DataSetGenerator {
     public String toString() {
         return "XOR";
     }
-    
-    
+
+
 
 }

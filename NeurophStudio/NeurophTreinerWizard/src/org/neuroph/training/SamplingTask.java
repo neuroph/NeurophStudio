@@ -13,8 +13,8 @@ import org.neuroph.util.data.sample.SubSampling;
 public class SamplingTask extends Task {
     DataSet dataSet;
     Sampling sampling;
-    List<DataSet> dataSetSample;
-          
+    DataSet[] dataSetSample;
+
     public SamplingTask(String name) {
         super(name);
     }
@@ -22,24 +22,25 @@ public class SamplingTask extends Task {
 //    public SamplingTask(Sampling sampling) {
 //        super("SamplingTask");
 //        this.sampling = sampling;
-//    }    
-    
+//    }
+
      // how to choose sampling method
-    public void execute() {        
-        Properties trainingProperties = (Properties)getVariable("trainingProperties");      
-        Properties crossValProps = (Properties)trainingProperties.get("crossValidationProperties");          
-                
+    @Override
+    public void execute() {
+        Properties trainingProperties = (Properties)getVariable("trainingProperties");
+        Properties crossValProps = (Properties)trainingProperties.get("crossValidationProperties");
+
         dataSet = (DataSet)getVariable("dataSet");
-        int trainingSetPercent =  (Integer)crossValProps.get("trainingSetPercent") ;        
-            
+        int trainingSetPercent =  (Integer)crossValProps.get("trainingSetPercent") ;
+
         logMessage("Sampling data set to create training and test sets: "+trainingSetPercent+" % / "+(100-trainingSetPercent) +"%");
 
-        this.sampling = new SubSampling(trainingSetPercent);        
+        this.sampling = new SubSampling(trainingSetPercent);
         dataSetSample = dataSet.sample(sampling);
-        
-        parentProcess.setVariable(new Variable<DataSet>("trainingSet", dataSetSample.get(0)));
-        parentProcess.setVariable(new Variable<DataSet>("testSet", dataSetSample.get(1)));
+
+        parentProcess.setVariable(new Variable<>("trainingSet", dataSetSample[0]));
+        parentProcess.setVariable(new Variable<>("testSet", dataSetSample[1]));
     }
 
-    
+
 }

@@ -48,7 +48,7 @@ import org.openide.windows.TopComponent;
 )
 @TopComponent.Description(
         preferredID = "FXVisualizationTopComponent",
-        //iconBase="SET/PATH/TO/ICON/HERE", 
+        //iconBase="SET/PATH/TO/ICON/HERE",
         persistenceType = TopComponent.PERSISTENCE_ALWAYS
 )
 @TopComponent.Registration(mode = "editor", openAtStartup = false)
@@ -66,7 +66,7 @@ import org.openide.windows.TopComponent;
 public final class JFXVisualizationTopComponent extends TopComponent {
 
     private JFXPanel jfxPanel; //JFXPanel class
-    
+
     /**
      * 3D Histogram from fxyz
      */
@@ -77,14 +77,14 @@ public final class JFXVisualizationTopComponent extends TopComponent {
      */
     private ScatterPlot scatterPlot;
 
-    
-    
-    private PerspectiveCamera camera;    
+
+
+    private PerspectiveCamera camera;
 // private double cameraDistance = 500;
-    
+
     // used for mouse tracking
     private double scenex, sceney, scenez = 0;
-    
+
     private double fixedXAngle, fixedYAngle, fixedZAngle = 0;
     private final DoubleProperty angleX = new SimpleDoubleProperty(0);
     private final DoubleProperty angleY = new SimpleDoubleProperty(0);
@@ -92,7 +92,7 @@ public final class JFXVisualizationTopComponent extends TopComponent {
 
     // 3d coord cube from fxyz
     private CubeViewer cubeViewer;
-    
+
     // used for cubeViewer rotation & translation
     private CameraTransformer cameraTransform = new CameraTransformer();
 
@@ -103,18 +103,18 @@ public final class JFXVisualizationTopComponent extends TopComponent {
     private double mouseOldY;
     private double mouseDeltaX;
     private double mouseDeltaY;
-        
+
     Group sceneRoot;
-    Scene scene;    
-    
+    Scene scene;
+
     public JFXVisualizationTopComponent() {
         initComponents();
         setName(Bundle.CTL_FXVisualizationTopComponent());
         setToolTipText(Bundle.HINT_FXVisualizationTopComponent());
         jfxPanel = new JFXPanel();
         add(jfxPanel, BorderLayout.CENTER);
-        
-     
+
+
     }
 
     /**
@@ -269,13 +269,13 @@ public final class JFXVisualizationTopComponent extends TopComponent {
 
         cubeViewer.setxAxisData(dataX);
         cubeViewer.setyAxisData(dataY);
-        cubeViewer.setzAxisData(dataZ);        
-        
+        cubeViewer.setzAxisData(dataZ);
+
         //--------------------------------------------------------------
-        
-        
-        
-        //First person shooter keyboard movement 
+
+
+
+        //First person shooter keyboard movement
         scene.setOnKeyPressed(event -> {
             double change = 10.0;
             //Add shift modifier to simulate "Running Speed"
@@ -343,7 +343,7 @@ public final class JFXVisualizationTopComponent extends TopComponent {
     private void drawHistogram() {
  HBox hbox = new HBox();
     hbox.setPadding(new Insets(15, 12, 15, 12));
-    hbox.setSpacing(10);        
+    hbox.setSpacing(10);
         sceneRoot = new Group();
         scene = new Scene(hbox);
         scene.setFill(Color.BLACK);
@@ -358,8 +358,8 @@ public final class JFXVisualizationTopComponent extends TopComponent {
      //   sceneRoot.getChildren().addAll(cubeViewer);
         //setup camera transform for rotational support
         sceneRoot.getChildren().add(cameraTransform);
-        
-        
+
+
         histogram = new Histogram(10, 1, true);
         sceneRoot.getChildren().addAll(histogram);
 
@@ -454,8 +454,8 @@ public final class JFXVisualizationTopComponent extends TopComponent {
 
 //        sceneRoot.getChildren().addAll(cubeViewer);
         //setup camera transform for rotational support
-        sceneRoot.getChildren().add(cameraTransform);        
-        
+        sceneRoot.getChildren().add(cameraTransform);
+
         scatterPlot = new ScatterPlot(100, 1, true);
         sceneRoot.getChildren().addAll(scatterPlot);
 
@@ -463,7 +463,7 @@ public final class JFXVisualizationTopComponent extends TopComponent {
         ArrayList<Double> dataX = new ArrayList<>();
         ArrayList<Double> dataY = new ArrayList<>();
         ArrayList<Double> dataZ = new ArrayList<>();
-        
+
         //create some random dataset here
         //DataProvider3D<Point3D> dataProvider = new WeightsDataProvider3D(new MultiLayerPerceptron(4, 5, 6, 10, 15, 20));
         DataSet someDataSet = createRandomDataSet();
@@ -563,7 +563,7 @@ public final class JFXVisualizationTopComponent extends TopComponent {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
     }
-    
+
     private DataSet createRandomDataSet() {
         DataSet dataSet = new DataSet(3, 1);
         for (int i = 0; i<1000; i++) {
@@ -572,7 +572,7 @@ public final class JFXVisualizationTopComponent extends TopComponent {
             input[1] = Math.random() * 100;
             input[2] = Math.random() * 100;
             DataSetRow row = new DataSetRow(input, new double[]{1});
-            dataSet.addRow(row);
+            dataSet.add(row);
         }
         return dataSet;
     }

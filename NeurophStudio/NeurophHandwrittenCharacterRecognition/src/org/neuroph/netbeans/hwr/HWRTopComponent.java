@@ -11,32 +11,22 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import java.util.Hashtable;
-import java.util.Map;
 
+import java.util.Map;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
-//import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.neuroph.core.NeuralNetwork;
-import org.neuroph.core.data.DataSet;
-
-import org.neuroph.netbeans.hwr.wiz.HWRUtil;
 import org.neuroph.netbeans.hwr.wiz.HWRecognitionManager;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 
 
-
-
-/**
- * Top component which displays something.
- */
 @ConvertAsProperties(dtd = "-//org.neuroph.netbeans.hwr//HWR//EN",
 autostore = false)
 public final class HWRTopComponent extends TopComponent implements LookupListener {
@@ -45,31 +35,27 @@ public final class HWRTopComponent extends TopComponent implements LookupListene
     /** path to the icon used by the component and its open action */
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
     private static final String PREFERRED_ID = "HWRTopComponent";
-    
-    private Map<TextAttribute, Object> styles = new Hashtable<TextAttribute, Object>();
+
+    private Map<TextAttribute, Object> styles = new Hashtable<>();
     private Font font = new Font(Font.SERIF, Font.PLAIN, 20);
-    
-        private NeuralNetwork selectedNeuralNetwork;
-    
-    ArrayList<String> imageLabels = new ArrayList<String>();
+
+    private NeuralNetwork selectedNeuralNetwork;
+
+    ArrayList<String> imageLabels = new ArrayList<>();
     javax.swing.GroupLayout jImagePanelLayout;
- 
-   
+
+
 
     public HWRTopComponent() {
         initComponents();
         setName(NbBundle.getMessage(HWRTopComponent.class, "CTL_HWRTopComponent"));
         setToolTipText(NbBundle.getMessage(HWRTopComponent.class, "HINT_HWRTopComponent"));
 //        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
-       
-        
     }
 
     public static void createTrainingSetFolder() {
         File f = new File(TreeManager.getPath());
         f.mkdir();
-//        File f1 = new File("Letters/Training Set");
-//        f1.mkdir();
     }
 
     private String[] formatOutput(String output) {
@@ -534,15 +520,15 @@ public final class HWRTopComponent extends TopComponent implements LookupListene
         Collection c = r.allInstances();
         if (!c.isEmpty()) {
             Object item = c.iterator().next();
-            
+
             if (item instanceof NeuralNetwork) {
                 selectedNeuralNetwork = (NeuralNetwork) item;
                 networkField.setText(selectedNeuralNetwork.getLabel());
                 HWRecognitionManager.getInstance().setNeuralNetwork(selectedNeuralNetwork);
             }
         }
-    }        
+    }
 }
 
-    
+
 

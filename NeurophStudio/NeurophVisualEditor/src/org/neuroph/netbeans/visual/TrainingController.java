@@ -8,13 +8,13 @@ import org.neuroph.core.Neuron;
 import org.neuroph.core.events.LearningEvent;
 import org.neuroph.core.events.LearningEventListener;
 import org.neuroph.eval.ClassifierEvaluator;
-import org.neuroph.eval.CrossValidation;
+import org.neuroph.eval.EvaluationResult;
+import org.neuroph.eval.KFoldCrossValidation;
 import org.neuroph.netbeans.project.NeurophProjectFilesFactory;
 import org.neuroph.nnet.learning.BinaryDeltaRule;
 import org.neuroph.nnet.learning.KohonenLearning;
 import org.neuroph.nnet.learning.LMS;
 import org.neuroph.nnet.learning.SupervisedHebbianLearning;
-import org.neuroph.util.data.sample.SubSampling;
 import org.openide.util.Exceptions;
 import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
@@ -25,13 +25,12 @@ import org.openide.windows.InputOutput;
  */
 public class TrainingController implements Thread.UncaughtExceptionHandler {
 
-    private NeuralNetAndDataSet neuralNetAndDataSet;
-    private NeuralNetwork<?> neuralNet;
+    private final NeuralNetAndDataSet neuralNetAndDataSet;
+    private final NeuralNetwork<?> neuralNet;
     private boolean isPaused; // we should be able to get this from neuralnetwork/learning rule
     private boolean useCrossvalidation;
     private int numberOfCrossvalSubsets;
-    private int[] subsetDistribution;
-    private CrossValidation crossval = null;
+    private KFoldCrossValidation crossval;
     private int crossValNNCounter = 0;
     boolean saveNetworks;
     private boolean allowSamplesRepetition;
@@ -104,7 +103,7 @@ public class TrainingController implements Thread.UncaughtExceptionHandler {
         if (useCrossvalidation == false) {
             // use thread pool here
             Thread t = new Thread( new Runnable () {
-                
+
                 @Override
                 public void run() {
                     neuralNet.learn(neuralNetAndDataSet.getDataSet());
@@ -116,23 +115,16 @@ public class TrainingController implements Thread.UncaughtExceptionHandler {
 
         } else {
 
-            if (subsetDistribution != null) {
-              //  crossval = new CrossValidation(neuralNet, neuralNetAndDataSet.getDataSet(), subsetDistribution);
-            } else {
-                crossval = new CrossValidation(neuralNet, neuralNetAndDataSet.getDataSet(), numberOfCrossvalSubsets);
-            }
-            
-            if (allowSamplesRepetition)
-                ((SubSampling)crossval.getSampling()).setAllowRepetition(true);
-            
-            String[] classNames = new String[neuralNet.getOutputsCount()]; 
+            crossval = new KFoldCrossValidation(neuralNet, neuralNetAndDataSet.getDataSet(), numberOfCrossvalSubsets);
+
+            String[] classNames = new String[neuralNet.getOutputsCount()];
             int i = 0;
             for (Neuron n : neuralNet.getOutputNeurons()) {
                 classNames[i] = n.getLabel();
                 i++;
             }
-            
-            crossval.addEvaluator(new ClassifierEvaluator.MultiClass(classNames)); // add multi class here manualy to make it independent from data set
+
+            //crossval.addEvaluator(new ClassifierEvaluator.MultiClass(classNames)); // add multi class here manualy to make it independent from data set
 
             out.println("Running crossvalidation");
 
@@ -150,18 +142,19 @@ public class TrainingController implements Thread.UncaughtExceptionHandler {
                     }
                 }
             });
-            
-            
+
+
             (new Thread(new Runnable() {
                 public void run() {
                     try {
-                        crossval.run();
+                        EvaluationResult result =  crossval.run();
+                        out.println(result);
                     } catch (InterruptedException ex) {
                         Exceptions.printStackTrace(ex);
                     } catch (ExecutionException ex) {
                         Exceptions.printStackTrace(ex);
                     }
-                    out.println(crossval.getResult());
+
                 }
             })).start();
         }
@@ -202,10 +195,6 @@ public class TrainingController implements Thread.UncaughtExceptionHandler {
             out.println("Training exception: " + e.getMessage());
             e.printStackTrace(out);
         }
-    }
-
-    public void setCrossvalSubsetsDistribution(int[] dist) {
-        subsetDistribution = dist;
     }
 
     public void setSaveNetworks(boolean selected) {

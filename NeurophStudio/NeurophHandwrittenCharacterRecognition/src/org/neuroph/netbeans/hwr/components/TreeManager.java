@@ -34,7 +34,6 @@ public class TreeManager {
 
     private static DefaultTreeModel model;
     private static final String PATH = "Letters";
-     //private static final String PATH = "Characters";
 
     /**
      * This method sets the model for the given tree

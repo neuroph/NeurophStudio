@@ -64,7 +64,7 @@ import org.openide.windows.WindowManager;
         autostore = false)
 @TopComponent.Description(
         preferredID = "JMEVisualizationTopComponent",
-        //iconBase="SET/PATH/TO/ICON/HERE", 
+        //iconBase="SET/PATH/TO/ICON/HERE",
         persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "editor", openAtStartup = false)
 @ActionID(category = "Window", id = "org.neuroph.netbeans.jmevisualization.JMEVisualizationTopComponent")
@@ -362,9 +362,9 @@ public final class JMEVisualizationTopComponent extends TopComponent implements 
         consumerProducer = new ConsumerProducer(queueSize);
         consumerProducer.setConsumer(consumer);
         consumerProducer.setProducer(producer);
-        
+
         consumerProducer.startConsuming();
-        
+
     }
 
     class DTListener implements DropTargetListener {
@@ -455,21 +455,21 @@ public final class JMEVisualizationTopComponent extends TopComponent implements 
             }
             double[] outputs = new double[outputsNumber];
             outputs[randInt(0, outputsNumber - 1)] = randInt(1, outputsNumber);
-            dataSet.addRow(new DataSetRow(inputs, outputs));
+            dataSet.add(new DataSetRow(inputs, outputs));
         }
         return dataSet;
     }
-    
+
     /*
      * This method shows the information, eg. current name of dataset and neural network that are used for training
      */
     public void neuralNetworkAndDataSetInformationCheck(NeuralNetwork neuralNetvork, DataSet dataSet) {
 
-        
+
         if (dataSet != null) {
             if (dataSet.getLabel() != null) {
                 labDataset.setText(dataSet.getLabel());
-                
+
             } else {
                 labDataset.setText("Not selected");
             }
@@ -480,22 +480,22 @@ public final class JMEVisualizationTopComponent extends TopComponent implements 
             if (neuralNetvork.getLabel() != null) {
                 labNetwork.setText(neuralNetvork.getLabel());
             } else {
-                labNetwork.setText("Not selected");           
+                labNetwork.setText("Not selected");
             }
         } else {
             labNetwork.setText("Not selected");
         }
     }
-    
+
 //    int inputs = Integer.parseInt(txtInputsSize.getText());
 //        int outputs = Integer.parseInt(txtOutputsSize.getText());
 //        int dataSetSize = Integer.parseInt(txtSize.getText());
-//        
-//        DataSet dataSet = generateRandomDataSet(inputs, outputs, dataSetSize);       
+//
+//        DataSet dataSet = generateRandomDataSet(inputs, outputs, dataSetSize);
 //        dataSet.setLabel("Test dataset");
-//        
+//
 //        NeurophProjectFilesFactory.getDefault().createTrainingSetFile(dataSet);
-//             
+//
 //        IOProvider.getDefault().getIO("Neuroph", false).getOut().println("Created dataset "+dataSet.getLabel()+"\r\n");
 
     /**
@@ -842,7 +842,7 @@ public final class JMEVisualizationTopComponent extends TopComponent implements 
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtInputsSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInputsSizeActionPerformed
-        
+
     }//GEN-LAST:event_txtInputsSizeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -861,11 +861,11 @@ public final class JMEVisualizationTopComponent extends TopComponent implements 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void visualizationPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_visualizationPanelMouseClicked
-        
+
     }//GEN-LAST:event_visualizationPanelMouseClicked
 
     private void visualizationPanelMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_visualizationPanelMouseMoved
-       
+
     }//GEN-LAST:event_visualizationPanelMouseMoved
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
