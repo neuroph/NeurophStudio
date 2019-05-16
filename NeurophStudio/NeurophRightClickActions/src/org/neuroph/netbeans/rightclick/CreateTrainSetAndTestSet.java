@@ -35,7 +35,7 @@ public final class CreateTrainSetAndTestSet implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        List<WizardDescriptor.Panel<WizardDescriptor>> panels = new ArrayList<WizardDescriptor.Panel<WizardDescriptor>>();
+        List<WizardDescriptor.Panel<WizardDescriptor>> panels = new ArrayList<>();
         panels.add(new WizardCreateTraSetAndTestSetWizardPanel1());
         String[] steps = new String[panels.size()];
         for (int i = 0; i < panels.size(); i++) {
@@ -51,22 +51,29 @@ public final class CreateTrainSetAndTestSet implements ActionListener {
                 jc.putClientProperty(WizardDescriptor.PROP_CONTENT_NUMBERED, true);
             }
         }
-        WizardDescriptor wiz = new WizardDescriptor(new WizardDescriptor.ArrayIterator<WizardDescriptor>(panels));
+        WizardDescriptor wiz = new WizardDescriptor(new WizardDescriptor.ArrayIterator<>(panels));
         // {0} will be replaced by WizardDesriptor.Panel.getComponent().getName()
         wiz.setTitleFormat(new MessageFormat("{0}"));
         wiz.setTitle("Split Training Set");
+
         if (DialogDisplayer.getDefault().notify(wiz) == WizardDescriptor.FINISH_OPTION) {
-            // do something
             try {
-                // we should specify how many datasets and percent for each
+                // get values from ui
                 String numTest = (String) wiz.getProperty("numTest");
                 String numTraining = (String) wiz.getProperty("numTraining");
-                DataSet[] tsetArray = context.getDataSet().createTrainingAndTestSubsets(Integer.parseInt(numTraining), Integer.parseInt(numTest));
-                tsetArray[0].setLabel(context.getDataSet().getLabel() + "(" + numTraining + "%)");
-                tsetArray[1].setLabel(context.getDataSet().getLabel() + "(" + numTest + "%)");
-                NeurophProjectFilesFactory.getDefault().createTrainingSetFile(tsetArray[0]);
-                NeurophProjectFilesFactory.getDefault().createTestSetFile(tsetArray[1]);
-            } catch (Exception e) {
+                double training = Double.parseDouble(numTraining) / 100;
+                double test = Double.parseDouble(numTest) / 100;
+
+                // split data set
+                DataSet[] trainTestSplit = context.getDataSet().split(training, test); ;
+                trainTestSplit[0].setLabel(context.getDataSet().getLabel() + "(" + numTraining + "%)");
+                trainTestSplit[1].setLabel(context.getDataSet().getLabel() + "(" + numTest + "%)");
+
+                // create files
+                NeurophProjectFilesFactory.getDefault().createTrainingSetFile(trainTestSplit[0]);
+                NeurophProjectFilesFactory.getDefault().createTestSetFile(trainTestSplit[1]);
+
+            } catch (NumberFormatException e) {
                 e.getMessage();
             }
 
