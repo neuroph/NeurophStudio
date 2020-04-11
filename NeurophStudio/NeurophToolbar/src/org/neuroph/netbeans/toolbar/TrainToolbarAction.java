@@ -2,7 +2,6 @@ package org.neuroph.netbeans.toolbar;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import org.neuroph.dev.noprop.NoPropNet;
 
 import org.neuroph.netbeans.visual.TrainingController;
 import org.neuroph.netbeans.main.ViewManager;
@@ -59,12 +58,12 @@ public final class TrainToolbarAction implements ActionListener {
                 showMLPTrainingDialog();
             } else if (neuralNetClass.equals(SupervisedHebbianNetwork.class)) {
                 showHebbianTrainingDialog();
-            } else if (neuralNetClass.equals(NoPropNet.class)) {                
-                neuralNetAndDataSet.getNetwork().randomizeWeights(new RangeRandomizer(-1, 1));
-                RangeNormalizer norm = new RangeNormalizer(-0.9, 0.9);
-                norm.normalize(neuralNetAndDataSet.getDataSet());
-                neuralNetAndDataSet.getDataSet().shuffle();
-                showLmsTrainingDialog();
+//            } else if (neuralNetClass.equals(NoPropNet.class)) {                
+//                neuralNetAndDataSet.getNetwork().randomizeWeights(new RangeRandomizer(-1, 1));
+//                RangeNormalizer norm = new RangeNormalizer(-0.9, 0.9);
+//                norm.normalize(neuralNetAndDataSet.getDataSet());
+//                neuralNetAndDataSet.getDataSet().shuffle();
+//                showLmsTrainingDialog();
             } else {
                 TrainingController trainingController = new TrainingController(neuralNetAndDataSet);
                 trainingController.train();

@@ -75,7 +75,7 @@ public class NeuralNetworkTraining {
 
                 try {
                     img = ImageIO.read(f);
-                    img = fc.processImage(img);
+                    img = fc.apply(img);
 
                     File actualFile = new File(dir3, f.getName());
                     ImageIO.write(img, "png", actualFile);
@@ -135,6 +135,6 @@ public class NeuralNetworkTraining {
         m.setLearningRate(0.2);
         m.setMaxError(0.1);
         m.setMomentum(0.7);
-        nnet.learn(ds,m);                                                           //Sta da radim sa ovim, gde da ide??
+        nnet.learn(ds);
     }
 }

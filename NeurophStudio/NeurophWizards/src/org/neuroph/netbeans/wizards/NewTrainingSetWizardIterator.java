@@ -9,7 +9,7 @@ import java.util.Set;
 import javax.swing.JComponent;
 import javax.swing.event.ChangeListener;
 import org.neuroph.core.data.DataSet;
-import org.neuroph.adapters.weka.WekaDataSetConverter;
+//import org.neuroph.adapters.weka.WekaDataSetConverter;
 import org.neuroph.netbeans.project.CurrentProject;
 import org.neuroph.netbeans.project.NeurophProject;
 import org.neuroph.netbeans.project.NeurophProjectFilesFactory;
@@ -94,9 +94,9 @@ public final class NewTrainingSetWizardIterator implements WizardDescriptor.Inst
             } else {
                 String extension = FileUtil.getExtension(file).toLowerCase();
                 switch(extension) {
-                    case "arff":
-                        dataSet = WekaDataSetConverter.createDataSetFromFile(file, inputsNumber, outputsNumber);
-                        break;
+//                    case "arff":
+//                        dataSet = WekaDataSetConverter.createDataSetFromFile(file, inputsNumber, outputsNumber);
+//                        break;
                     default:
                         dataSet = DataSet.createFromFile(file, inputsNumber, outputsNumber, delimiter, false);
                         break;

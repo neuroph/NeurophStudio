@@ -3,7 +3,7 @@ package org.neuroph.training;
 import java.util.Stack;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.training.SampleTraining;
-import org.neuroph.util.Properties;
+import org.neuroph.util.NeurophProperties;
 
 /**
  * Generates and sets properties for the whole process note: load all settings
@@ -26,7 +26,7 @@ public class WorkflowPropertiesGeneratorTask extends Task {
     int maxIterations=0;
     double maxError;
     // generated properties
-    Stack<Properties> properties; // moze i red queue
+    Stack<NeurophProperties> properties; // moze i red queue
     
     String outputVarName = "workflowParametars";
 
@@ -35,7 +35,7 @@ public class WorkflowPropertiesGeneratorTask extends Task {
     // ali da se pretrazuje ceo prostor: min max vrednost i step
     public WorkflowPropertiesGeneratorTask(String taskName, String outputVarName) {
         super(taskName);
-        properties = new Stack<Properties>();
+        properties = new Stack<NeurophProperties>();
 
         this.outputVarName = outputVarName;
     }
@@ -51,8 +51,8 @@ public class WorkflowPropertiesGeneratorTask extends Task {
             for (int h = 0; h < hiddenNeurons.length; h++) {
                 for (int r = 0; r < crossValRepeatCount; r++) {
                     for (int tp = 0; tp < trainingSetPercents.length; tp++) {
-                        Properties processProperties = new Properties();
-                        Properties dataSetProperties = new Properties();
+                        NeurophProperties processProperties = new NeurophProperties();
+                        NeurophProperties dataSetProperties = new NeurophProperties();
                         if (dataSet == null) {
                             dataSetProperties.setProperty("fileName", SampleTraining.class.getResource("iris.data.txt").getFile());
                             dataSetProperties.setProperty("inputsCount", 4);
@@ -67,7 +67,7 @@ public class WorkflowPropertiesGeneratorTask extends Task {
 
                         processProperties.setProperty("dataSetProperties", dataSetProperties);
 
-                        Properties neuralNetworkProperties = new Properties();
+                        NeurophProperties neuralNetworkProperties = new NeurophProperties();
                         neuralNetworkProperties.setProperty("learningRate", learningRates[l]);
                         neuralNetworkProperties.setProperty("maxError", maxError);
                         neuralNetworkProperties.setProperty("maxIterations", maxIterations);
@@ -76,7 +76,7 @@ public class WorkflowPropertiesGeneratorTask extends Task {
                         neuralNetworkProperties.setProperty("outputNeurons", dataSet.getOutputSize());
                         processProperties.setProperty("neuralNetworkProperties", neuralNetworkProperties);
 
-                        Properties crossValidationProperties = new Properties();
+                        NeurophProperties crossValidationProperties = new NeurophProperties();
                         crossValidationProperties.setProperty("trainingSetPercent", trainingSetPercents[tp]);
                         processProperties.setProperty("crossValidationProperties", crossValidationProperties);
 

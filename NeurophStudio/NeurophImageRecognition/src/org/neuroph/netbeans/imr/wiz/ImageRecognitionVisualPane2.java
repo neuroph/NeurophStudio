@@ -141,10 +141,16 @@ public class ImageRecognitionVisualPane2 extends javax.swing.JPanel implements E
         widthLabel = new javax.swing.JLabel();
         heightLabel = new javax.swing.JLabel();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Choose images that should not be recognized (avoid false recognition)");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 36, 265, 219));
 
         addJunkImageButton.setText("Add image");
         addJunkImageButton.addActionListener(new java.awt.event.ActionListener() {
@@ -152,6 +158,7 @@ public class ImageRecognitionVisualPane2 extends javax.swing.JPanel implements E
                 addJunkImageButtonActionPerformed(evt);
             }
         });
+        jPanel1.add(addJunkImageButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 261, -1, -1));
 
         addJunkDirectoryButton.setText("Add directory");
         addJunkDirectoryButton.addActionListener(new java.awt.event.ActionListener() {
@@ -159,9 +166,11 @@ public class ImageRecognitionVisualPane2 extends javax.swing.JPanel implements E
                 addJunkDirectoryButtonActionPerformed(evt);
             }
         });
+        jPanel1.add(addJunkDirectoryButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 261, -1, -1));
 
         junkImagePreviewLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         junkImagePreviewLabel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.add(junkImagePreviewLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 36, 265, 219));
 
         deleteJunkImageButton.setText("Delete");
         deleteJunkImageButton.addActionListener(new java.awt.event.ActionListener() {
@@ -169,6 +178,7 @@ public class ImageRecognitionVisualPane2 extends javax.swing.JPanel implements E
                 deleteJunkImageButtonActionPerformed(evt);
             }
         });
+        jPanel1.add(deleteJunkImageButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(204, 261, -1, -1));
 
         editButton.setText("Edit image");
         editButton.addActionListener(new java.awt.event.ActionListener() {
@@ -176,102 +186,21 @@ public class ImageRecognitionVisualPane2 extends javax.swing.JPanel implements E
                 editButtonActionPerformed(evt);
             }
         });
+        jPanel1.add(editButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 261, -1, -1));
 
-        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel1)
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 265, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jPanel1Layout.createSequentialGroup()
-                                .add(addJunkImageButton)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(addJunkDirectoryButton)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(deleteJunkImageButton)))
-                        .add(45, 45, 45)
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(editButton)
-                            .add(junkImagePreviewLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 265, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
-                .add(jLabel1)
-                .add(22, 22, 22)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 219, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(junkImagePreviewLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 219, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(addJunkImageButton)
-                    .add(addJunkDirectoryButton)
-                    .add(deleteJunkImageButton)
-                    .add(editButton))
-                .addContainerGap())
-        );
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Image Width:");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
         jLabel3.setText("Image Height:");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 36, -1, -1));
+        jPanel2.add(widthLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 11, 46, 14));
+        jPanel2.add(heightLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 36, 43, 14));
 
-        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel2Layout.createSequentialGroup()
-                        .add(jLabel2)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(widthLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .add(jPanel2Layout.createSequentialGroup()
-                        .add(jLabel3)
-                        .add(10, 10, 10)
-                        .add(heightLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(167, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel2)
-                    .add(widthLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel3)
-                    .add(heightLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(layout.createSequentialGroup()
-                        .add(320, 320, 320)
-                        .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
-        );
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void addJunkImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addJunkImageButtonActionPerformed

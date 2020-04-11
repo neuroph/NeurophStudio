@@ -404,7 +404,7 @@ public final class RecognitionTopComponent extends TopComponent implements Looku
 
         ImageFilter filter = filterTableModel.getImageFilter(row);
 
-        BufferedImage filtered = filter.processImage(stack.peek());
+        BufferedImage filtered = filter.apply(stack.peek());
         putIntoLookup(filtered);
 
     }//GEN-LAST:event_btnPreviewFilterActionPerformed
@@ -554,7 +554,7 @@ public final class RecognitionTopComponent extends TopComponent implements Looku
             return;
         }
 
-        BufferedImage filtrered = imageFilter.processImage(stack.peek());
+        BufferedImage filtrered = imageFilter.apply(stack.peek());
         putIntoLookup(filtrered);
         stack.push(filtrered);
 

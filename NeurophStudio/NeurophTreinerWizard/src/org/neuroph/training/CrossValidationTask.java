@@ -1,9 +1,8 @@
 package org.neuroph.training;
 
-import java.util.List;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.data.DataSet;
-import org.neuroph.util.Properties;
+import org.neuroph.util.NeurophProperties;
 import org.neuroph.util.data.sample.Sampling;
 import org.neuroph.util.data.sample.SubSampling;
 
@@ -53,8 +52,8 @@ public class CrossValidationTask extends Task {
     @Override
     public void execute() {
         if (iteration == 0) { // on first execution create subsets and set training and test set
-            Properties trainingProperties = (Properties) getVariable("trainingProperties");
-            Properties crossValProps = (Properties) trainingProperties.get("crossValidationProperties");
+            NeurophProperties trainingProperties = (NeurophProperties) getVariable("trainingProperties");
+            NeurophProperties crossValProps = (NeurophProperties) trainingProperties.get("crossValidationProperties");
 
             dataSet = (DataSet) getVariable("dataSet");
             folds = 2; // (Integer)crossValProps.get("folds") ;

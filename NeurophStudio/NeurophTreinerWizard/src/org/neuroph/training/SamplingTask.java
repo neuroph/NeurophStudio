@@ -2,7 +2,7 @@ package org.neuroph.training;
 
 import java.util.List;
 import org.neuroph.core.data.DataSet;
-import org.neuroph.util.Properties;
+import org.neuroph.util.NeurophProperties;
 import org.neuroph.util.data.sample.Sampling;
 import org.neuroph.util.data.sample.SubSampling;
 
@@ -27,8 +27,8 @@ public class SamplingTask extends Task {
      // how to choose sampling method
     @Override
     public void execute() {
-        Properties trainingProperties = (Properties)getVariable("trainingProperties");
-        Properties crossValProps = (Properties)trainingProperties.get("crossValidationProperties");
+        NeurophProperties trainingProperties = (NeurophProperties)getVariable("trainingProperties");
+        NeurophProperties crossValProps = (NeurophProperties)trainingProperties.get("crossValidationProperties");
 
         dataSet = (DataSet)getVariable("dataSet");
         int trainingSetPercent =  (Integer)crossValProps.get("trainingSetPercent") ;

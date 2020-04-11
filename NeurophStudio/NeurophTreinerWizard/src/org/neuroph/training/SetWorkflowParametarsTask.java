@@ -1,7 +1,7 @@
 package org.neuroph.training;
 
 import java.util.Stack;
-import org.neuroph.util.Properties;
+import org.neuroph.util.NeurophProperties;
 
 /**
  * Setting process properties for single iteration, by poping one by one from stack

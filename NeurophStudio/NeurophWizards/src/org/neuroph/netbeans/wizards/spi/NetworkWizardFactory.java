@@ -33,8 +33,6 @@ public class NetworkWizardFactory {
                 return new InstarNetworkWizard();
             case OUTSTAR:
                 return new OutstarNetworkWizard();
-            case NOPROP:
-                return new NoPropNetworkWizard();
             case CONVOLUTIONAL_NETWORK:
                 return new ConvolutionalNetworkWizard();                    
             default:

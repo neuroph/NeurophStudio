@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.neuroph.imagepreprocessing.wizard;
 
 import imagepreprocessing.manipulation.ImageManipulation;
@@ -179,7 +174,7 @@ public final class ImageDataSetWizardAction implements ActionListener {
     private void filterImage(BufferedImage image, String imageFileName) throws IOException {
         String fn = imageFileName.substring(0, imageFileName.indexOf("."));
         String ext = imageFileName.substring(imageFileName.indexOf(".") + 1, imageFileName.length());
-        image = chain.processImage(image);
+        image = chain.apply(image);
         ImageIO.write(image, ext, new File(imagesDir + "/" + fn + "." + ext));
 
     }

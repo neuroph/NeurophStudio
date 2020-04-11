@@ -13,7 +13,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.netbeans.main.easyneurons.dialog.ComboItem;
-import org.neuroph.util.TrainingSetImport;
 
 /**
  *
@@ -193,12 +192,12 @@ public class TrainingDataFileDialog extends javax.swing.JDialog {
         this.separator = ((ComboItem)separatorSelect.getSelectedItem()).getValue().toString();
         // load file
         try {
-             DataSet trainingSet = TrainingSetImport.importFromFile(filePath, this.numOfInputs, this.numOfOutputs, this.separator);
+             DataSet trainingSet = DataSet.createFromFile(filePath, this.numOfInputs, this.numOfOutputs, this.separator);
              this.tsef.setTrainingSet(trainingSet);
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, "File not Found!");
-        } catch(IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error loading file!");
+//        } catch (FileNotFoundException ex) {
+//            JOptionPane.showMessageDialog(this, "File not Found!");
+//        } catch(IOException ex) {
+//            JOptionPane.showMessageDialog(this, "Error loading file!");
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Invalid number format!");
         }

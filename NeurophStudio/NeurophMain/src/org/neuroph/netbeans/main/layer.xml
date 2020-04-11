@@ -162,6 +162,7 @@
         <file name="Standard.xml" url="Standard.xml"/>
         <file name="UndoRedo_hidden"/>
     </folder>
+    <folder name="UI"/>
     <folder name="Windows2">
         <folder name="Components">
             <file name="ASTBrowserTopComponent.settings_hidden"/>

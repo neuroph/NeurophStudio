@@ -10,7 +10,6 @@ import org.neuroph.imgrec.filter.impl.AdaptiveThresholdBinarizeFilter;
 import org.neuroph.imgrec.filter.impl.DCTgrayscale;
 import org.neuroph.imgrec.filter.impl.DenoiseDCTFilter;
 import org.neuroph.imgrec.filter.impl.Dilation;
-import org.neuroph.imgrec.filter.impl.EdgeDetection;
 import org.neuroph.imgrec.filter.impl.EraseBlackBorderFilter;
 import org.neuroph.imgrec.filter.impl.GaussianBluring;
 import org.neuroph.imgrec.filter.impl.GaussianNoise;
@@ -233,7 +232,6 @@ public class ImagePreprocessingPanel extends javax.swing.JPanel {
         allFiltersLM.addElement(new MaskSegmentationFilter());
         allFiltersLM.addElement(new MedianFilter());
         allFiltersLM.addElement(new OtsuBinarizeFilter());
-        allFiltersLM.addElement(new EdgeDetection());
         allFiltersLM.addElement(new DCTgrayscale());
         allFiltersLM.addElement(new DenoiseDCTFilter());
         allFiltersLM.addElement(new GaussianBluring());

@@ -5,18 +5,10 @@
  */
 package org.neuroph.netbeans.tcr.top.settings;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
-import java.awt.Button;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,22 +16,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import javax.imageio.ImageIO;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.netbeans.modules.image.ImageDataObject;
-import org.neuroph.core.NeuralNetwork;
 import org.neuroph.imgrec.filter.ImageFilter;
 import org.neuroph.imgrec.filter.ImageFilterChain;
 import org.neuroph.imgrec.filter.impl.AdaptiveThresholdBinarizeFilter;
@@ -377,7 +360,7 @@ public final class SettingsTopComponent extends TopComponent implements LookupLi
 
         ImageFilter filter = filterTableModel.getImageFilter(row);
 
-        BufferedImage filtered = filter.processImage(stack.peek());
+        BufferedImage filtered = filter.apply(stack.peek());
         putIntoLookup(filtered);
 
 
@@ -507,7 +490,7 @@ public final class SettingsTopComponent extends TopComponent implements LookupLi
             return;
         }
 
-        BufferedImage filtrered = imageFilter.processImage(stack.peek());
+        BufferedImage filtrered = imageFilter.apply(stack.peek());
         putIntoLookup(filtrered);
         stack.push(filtrered);
 
@@ -549,7 +532,7 @@ public final class SettingsTopComponent extends TopComponent implements LookupLi
                 BufferedImage image = (BufferedImage) imageDO.getImage();
                 stack.push(image);
                 for (ImageFilter filter : selectedFilters) {
-                    BufferedImage filtered = filter.processImage(stack.peek());
+                    BufferedImage filtered = filter.apply(stack.peek());
                     stack.push(filtered);
                 }
 
@@ -672,7 +655,7 @@ public final class SettingsTopComponent extends TopComponent implements LookupLi
                         continue;
                     }
 
-                    BufferedImage binarizedImage = chain.processImage(image);
+                    BufferedImage binarizedImage = chain.apply(image);
                     String scanQualityStr = (String) cmbScanQ.getSelectedItem();
                     int scanQuality = Integer.parseInt(scanQualityStr.split(" ")[0]);
                     Letter letterInfo = new Letter(scanQuality, binarizedImage);

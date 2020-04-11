@@ -1,7 +1,7 @@
 package org.neuroph.training;
 
 import org.neuroph.core.data.DataSet;
-import org.neuroph.util.Properties;
+import org.neuroph.util.NeurophProperties;
 
 /**
  * Loads data set from file and sets process var 'dataSet'
@@ -29,8 +29,8 @@ public class DataSetLoaderTask extends Task {
 
     public void execute() {
 
-        Properties trainingProperties = (Properties) getVariable("trainingProperties");
-        Properties dataSetProps = (Properties) trainingProperties.get(inputVarName);
+        NeurophProperties trainingProperties = (NeurophProperties) getVariable("trainingProperties");
+        NeurophProperties dataSetProps = (NeurophProperties) trainingProperties.get(inputVarName);
 
         String oldFilename = this.fileName;
         this.fileName = (String) dataSetProps.get("fileName");

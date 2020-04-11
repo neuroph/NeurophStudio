@@ -10,7 +10,6 @@ import java.awt.Graphics;
 import java.awt.ScrollPane;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
-import javafx.scene.control.ScrollBar;
 import javax.swing.Icon;
 import javax.swing.JScrollPane;
 import org.netbeans.api.settings.ConvertAsProperties;

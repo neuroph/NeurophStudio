@@ -2,7 +2,7 @@ package org.neuroph.training;
 
 import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.learning.BackPropagation;
-import org.neuroph.util.Properties;
+import org.neuroph.util.NeurophProperties;
 
 /**
  * TODO: add maxError, maxIterations, momentum , learningRuleClass
@@ -29,8 +29,8 @@ public class MultiLayerPerceptronFactoryTask extends Task {
         // get neural network settings from the process and use MultiLayerPerceptronFactoryTask
         logMessage("Creating neural network");
         
-        Properties processProperties = (Properties)getVariable("trainingProperties", Properties.class);      
-        Properties  neuralNetworkProperties = (Properties)processProperties.get(inputVarName);        
+        NeurophProperties processProperties = (NeurophProperties)getVariable("trainingProperties", NeurophProperties.class);      
+        NeurophProperties  neuralNetworkProperties = (NeurophProperties)processProperties.get(inputVarName);        
         
        // int inputs = (Integer)neuralNetworkProperties.get("inputNeurons");
         int inputs = getVariable("inputNeurons", Integer.TYPE);       
