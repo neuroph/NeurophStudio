@@ -69,6 +69,7 @@ public class TestToolbarAction implements ActionListener {
        
         double totalMSE = 0;
 
+        StringBuilder outputLines = new StringBuilder(); // String buffer for reuse memory when large data set used.
         Iterator<DataSetRow> iterator = trainingController.getDataSet().iterator();
         while (iterator.hasNext()) {
             DataSetRow trainingEl = iterator.next();
@@ -88,14 +89,14 @@ public class TestToolbarAction implements ActionListener {
 
             String outputStr = "Input: " + arrayToString(inputs) + " Output: " + arrayToString(outputs) + "Desired output: " + arrayToString(desiredOutputs) + " Error: " + arrayToString(errors) + "\r\n";
 
-            TestTopComponent.getDefault().output(outputStr);
+            outputLines.append(outputStr);
             totalMSE += patternError;
         }
 
         totalMSE = totalMSE / trainingController.getDataSet().size();
 
-        TestTopComponent.getDefault().output("Total Mean Square Error: " + totalMSE);
-            
+        outputLines.append("Total Mean Square Error: " + totalMSE);
+        TestTopComponent.getDefault().output(outputLines.toString());
       
     }
 
