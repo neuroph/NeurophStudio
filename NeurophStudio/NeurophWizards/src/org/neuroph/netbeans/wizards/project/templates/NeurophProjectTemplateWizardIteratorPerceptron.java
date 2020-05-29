@@ -19,7 +19,6 @@ import javax.swing.event.ChangeListener;
 import org.netbeans.api.project.ProjectManager;
 import org.netbeans.spi.project.ui.support.ProjectChooser;
 import org.netbeans.spi.project.ui.templates.support.Templates;
-import org.neuroph.netbeans.main.ViewManager;
 import org.neuroph.netbeans.main.easyneurons.samples.perceptron.PerceptronSampleFrameTopComponent;
 import org.openide.WizardDescriptor;
 import org.openide.filesystems.FileObject;

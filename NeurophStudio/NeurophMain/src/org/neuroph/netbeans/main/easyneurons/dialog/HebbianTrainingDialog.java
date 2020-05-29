@@ -6,7 +6,6 @@
 
 package org.neuroph.netbeans.main.easyneurons.dialog;
 
-import org.neuroph.netbeans.main.ViewManager;
 import org.neuroph.netbeans.visual.NeuralNetAndDataSet;
 import org.neuroph.netbeans.visual.TrainingController;
 import org.neuroph.nnet.learning.LMS;
@@ -19,7 +18,6 @@ public class HebbianTrainingDialog extends javax.swing.JDialog {
 	private static final long serialVersionUID = 1L;
 	
 	TrainingController controller;
-        ViewManager viewManager;
 
 	/** Creates new form LmsTrainingDialog */
 	public HebbianTrainingDialog(java.awt.Frame parent, boolean modal) {
@@ -27,11 +25,9 @@ public class HebbianTrainingDialog extends javax.swing.JDialog {
 		initComponents();
 	}
 
-	public HebbianTrainingDialog(java.awt.Frame parent, boolean modal, ViewManager easyNeuronsViewController,
-			NeuralNetAndDataSet neuralNetAndDataSet) {
+	public HebbianTrainingDialog(java.awt.Frame parent, boolean modal, NeuralNetAndDataSet neuralNetAndDataSet) {
 		super(parent, modal);
 		this.controller = new TrainingController(neuralNetAndDataSet);
-                this.viewManager=easyNeuronsViewController;
 		initComponents();
 	}
 
@@ -223,32 +219,38 @@ public class HebbianTrainingDialog extends javax.swing.JDialog {
 	}
 
 	public void train() {
-		String learningRateStr = learningRateField.getText().toString();
-		String maxErrorStr = maxErrorField.getText().toString();
-		String maxIterationsStr = maxIterationsField.getText().toString();
+		String learningRateStr = learningRateField.getText();
+		String maxErrorStr = maxErrorField.getText();
+		String maxIterationsStr = maxIterationsField.getText();
 
 		Double learningRate = new Double(learningRateStr);
 		Double maxError = new Double(maxErrorStr);
-		Integer maxIterations = new Integer(0);
+		Integer maxIterations = 0;
 
 		if (limitIterationsCheckkBox.isSelected())
 			maxIterations = new Integer(maxIterationsStr);
 
 		controller.setLmsParams(learningRate, maxError, maxIterations);
 
-		LMS learningRule = (LMS) this.controller.getNeuralNetAndDataSet().getNetwork().getLearningRule();
+//		LMS learningRule = (LMS) this.controller.getNeuralNetAndDataSet().getNetwork().getLearningRule();
 //		SupervisedTrainingMonitor lmsTrainingMonitor = new SupervisedTrainingMonitor(null,
 //				true, this.controller);
 //		lmsTrainingMonitor.setLocationRelativeTo(this);
 //		lms.addObserver(lmsTrainingMonitor);
 
-                viewManager.openTrainingMonitorWindow(this.controller.getNeuralNetAndDataSet());
+                openTrainingMonitorWindow(this.controller.getNeuralNetAndDataSet());
 		controller.train();
 
 		this.dispose();
-//		lmsTrainingMonitor.setVisible(true);
-
 	}
+        
+        private void openTrainingMonitorWindow(NeuralNetAndDataSet trainingController) {
+            SupervisedTrainingMonitorTopComponent monitorWindow = SupervisedTrainingMonitorTopComponent.findInstance();
+            monitorWindow.setSupervisedTrainingMonitorFrameVariables(trainingController);
+            monitorWindow.open();
+            monitorWindow.requestActive();
+            monitorWindow.observe(trainingController.getNetwork().getLearningRule());
+        }        
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel buttonPanel;

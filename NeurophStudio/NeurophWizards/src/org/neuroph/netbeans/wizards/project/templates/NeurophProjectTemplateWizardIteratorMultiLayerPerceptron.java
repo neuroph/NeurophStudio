@@ -11,15 +11,22 @@ import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.NoSuchElementException;
+import java.util.Observable;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeListener;
 import org.netbeans.api.project.ProjectManager;
 import org.netbeans.spi.project.ui.support.ProjectChooser;
 import org.netbeans.spi.project.ui.templates.support.Templates;
-import org.neuroph.netbeans.main.ViewManager;
+import org.neuroph.core.NeuralNetwork;
+import org.neuroph.netbeans.classificationsample.MultiLayerPerceptronVisualizationTopComponent;
+import org.neuroph.netbeans.classificationsample.NeuralNetObserver;
+import org.neuroph.netbeans.classificationsample.ObservableTrainingSet;
+import org.neuroph.netbeans.main.easyneurons.samples.perceptron.TrainingSetObserver;
+import org.neuroph.nnet.learning.BackPropagation;
 import org.openide.WizardDescriptor;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
@@ -79,7 +86,8 @@ public class NeurophProjectTemplateWizardIteratorMultiLayerPerceptron implements
         if (parent != null && parent.exists()) {
             ProjectChooser.setProjectsFolder(parent);
         }
-          ViewManager.getInstance().showMultiLayerPerceptronSample();
+       showMultiLayerPerceptronSample();
+       
        return resultSet;
     }
 
@@ -215,4 +223,48 @@ public class NeurophProjectTemplateWizardIteratorMultiLayerPerceptron implements
         }
 
     }
+    
+    public void showMultiLayerPerceptronSample() {
+        NeuralNetObserver neuralNetObserver = new NeuralNetObserver() {
+            @Override
+            public void update(Observable o, Object arg) {
+                NeuralNetwork net = getNnet();
+
+                super.update(o, arg);
+                net = getNnet();
+            }
+        };
+
+        TrainingSetObserver trainingSetObserver = new TrainingSetObserver() {
+            @Override
+            public void update(Observable o, Object arg) {
+                super.update(o, arg);
+            }
+        };
+
+        final ObservableTrainingSet observableTrainingSet = new ObservableTrainingSet();
+        observableTrainingSet.addObserver(trainingSetObserver);
+        observableTrainingSet.addObserver(neuralNetObserver);
+
+        NeuralNetwork nnet = neuralNetObserver.getNnet();
+        nnet.setLearningRule(new BackPropagation());       //ovo je moralo da se stavi... zasto - treba izbaciti i staviti momentum
+
+        SwingUtilities.invokeLater(new Runnable() {
+            // pozovi ovo iz wizarda
+            public void run() {
+                MultiLayerPerceptronVisualizationTopComponent backpropagationVisualizer = new MultiLayerPerceptronVisualizationTopComponent();
+                backpropagationVisualizer.setTrainingSetForMultiLayerPerceptronSample(observableTrainingSet);
+
+                backpropagationVisualizer.setVisible(true);
+                backpropagationVisualizer.open();
+
+                backpropagationVisualizer.requestActive();
+            }
+        }
+        );
+
+        //showMessage("Started Multi Layer Perceptron with Backpropagation Sample");
+
+    }    
+    
 }

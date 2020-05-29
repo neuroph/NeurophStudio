@@ -1,6 +1,5 @@
 package org.neuroph.netbeans.main.easyneurons.dialog;
 
-import org.neuroph.netbeans.main.ViewManager;
 import org.neuroph.netbeans.main.easyneurons.errorgraph.GraphFrameTopComponent;
 import org.neuroph.netbeans.visual.NeuralNetAndDataSet;
 import org.neuroph.netbeans.visual.TrainingController;
@@ -8,17 +7,13 @@ import org.neuroph.nnet.learning.LMS;
 import org.neuroph.nnet.learning.MomentumBackpropagation;
 
 /**
- *
  * New version of SupervisedTrainingDialog
  * added crossval and standard swing
  *
  * @author zoran
  */
 public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
-
-
-     // ovo bi m u mozdatrebalo prosledjivati....?
-     TrainingController trainingController;
+     private TrainingController trainingController;
 
     /**
      * Creates new form BackPropagationTrainingDialog
@@ -35,11 +30,10 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
 
         // todo: we could get NeuralNetAndDataSet from lookup!!!!
 
-        if (this.trainingController.getNeuralNetAndDataSet().getNetwork().getLearningRule() instanceof MomentumBackpropagation) {
+        if (neuralNetAndDataSet.getNetwork().getLearningRule() instanceof MomentumBackpropagation) {
             momentumLabel.setEnabled(true);
             momentumField.setEnabled(true);
         }
-
     }
 
     /**
@@ -53,6 +47,7 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
         java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jPanel6 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         maxErrorField = new javax.swing.JTextField();
@@ -69,11 +64,24 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         graphCheckBox = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
+        deepNettsCheckBox = new javax.swing.JCheckBox();
+        jLabel4 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         crossValidationCheckBox = new javax.swing.JCheckBox();
         subsetCountField = new javax.swing.JTextField();
         saveNetworksCheckBox = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.title")); // NOI18N
@@ -195,26 +203,48 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
         jPanel3.add(closeButton, gridBagConstraints);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.jPanel4.border.title"))); // NOI18N
-        jPanel4.setLayout(new java.awt.GridBagLayout());
 
         graphCheckBox.setSelected(true);
         org.openide.awt.Mnemonics.setLocalizedText(graphCheckBox, org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.graphCheckBox.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(14, 28, 0, 165);
-        jPanel4.add(graphCheckBox, gridBagConstraints);
 
         jLabel5.setFont(new java.awt.Font("Ubuntu", 0, 12)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.jLabel5.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 28, 18, 0);
-        jPanel4.add(jLabel5, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(deepNettsCheckBox, org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.deepNettsCheckBox.text")); // NOI18N
+        deepNettsCheckBox.setEnabled(false);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.jLabel4.text")); // NOI18N
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(deepNettsCheckBox)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(graphCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel4)))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(graphCheckBox)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(deepNettsCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addContainerGap())
+        );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(NewSupervisedTrainingDialog.class, "NewSupervisedTrainingDialog.jPanel5.border.title"))); // NOI18N
 
@@ -267,32 +297,34 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
+                        .addContainerGap()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -306,7 +338,7 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
 
 		Double learningRate = new Double(learningRateStr);
 		Double maxError = new Double(maxErrorStr);
-		Integer maxIterations = new Integer(0);
+		Integer maxIterations = 0;
 		Double momentum = new Double(momentumStr);
 
 		if (limitIterationsCheckBox.isSelected()) {
@@ -328,7 +360,7 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
                 }
 
                 if (graphCheckBox.isSelected()) {
-                    GraphFrameTopComponent graphFrame = ViewManager.getInstance().openErrorGraphFrame();
+                    GraphFrameTopComponent graphFrame = openErrorGraphFrame();
                     graphFrame.setTrainingController(trainingController);
                     graphFrame.observe(learningRule);
                 }
@@ -338,6 +370,13 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
                 this.dispose();
     }//GEN-LAST:event_trainButtonActionPerformed
 
+    private GraphFrameTopComponent openErrorGraphFrame() {
+        GraphFrameTopComponent graphFrame = new GraphFrameTopComponent();
+        graphFrame.open();
+        graphFrame.requestActive();
+        return graphFrame;
+    }    
+    
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
        this.dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
@@ -410,16 +449,19 @@ public class NewSupervisedTrainingDialog extends javax.swing.JDialog {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton closeButton;
     private javax.swing.JCheckBox crossValidationCheckBox;
+    private javax.swing.JCheckBox deepNettsCheckBox;
     private javax.swing.JCheckBox graphCheckBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JTextField learningRateField;
     private javax.swing.JCheckBox limitIterationsCheckBox;
     private javax.swing.JTextField maxErrorField;

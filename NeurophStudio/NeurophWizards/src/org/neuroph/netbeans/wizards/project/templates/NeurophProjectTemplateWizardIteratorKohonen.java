@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.NoSuchElementException;
@@ -23,9 +24,15 @@ import javax.swing.event.ChangeListener;
 import org.netbeans.api.project.ProjectManager;
 import org.netbeans.spi.project.ui.support.ProjectChooser;
 import org.netbeans.spi.project.ui.templates.support.Templates;
+import org.neuroph.core.NeuralNetwork;
+import org.neuroph.core.data.DataSet;
+import org.neuroph.core.data.DataSetRow;
+import org.neuroph.netbeans.main.easyneurons.samples.KohonenSampleTopComponent;
 import org.neuroph.netbeans.project.CurrentProject;
 import org.neuroph.netbeans.project.NeurophProject;
-import org.neuroph.netbeans.main.ViewManager;
+import org.neuroph.netbeans.project.NeurophProjectFilesFactory;
+import org.neuroph.netbeans.visual.NeuralNetAndDataSet;
+import org.neuroph.nnet.Kohonen;
 import org.openide.WizardDescriptor;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
@@ -89,11 +96,43 @@ public class NeurophProjectTemplateWizardIteratorKohonen implements WizardDescri
             ProjectChooser.setProjectsFolder(parent);
         }
 //getting neurophproject class from project manager
-    NeurophProject np= (NeurophProject) ProjectManager.getDefault().findProject(dir);
-       CurrentProject.getInstance().setCurrentProject(np);
-          ViewManager.getInstance().kohonenSample();
+    NeurophProject np = (NeurophProject) ProjectManager.getDefault().findProject(dir);
+        CurrentProject.getInstance().setCurrentProject(np);
+        kohonenSample();
         return resultSet;
     }
+    
+  /**
+     * Opens Kohonen sample
+     */
+    public void kohonenSample() {
+        int sampleSize = 100;
+        NeuralNetwork neuralNet = new Kohonen(new Integer(2), new Integer(sampleSize));
+        neuralNet.setLabel("KohonenNet");
+        DataSet dataSet = new DataSet(2);
+        dataSet.setLabel("Sample training set");
+
+        for (int i = 0; i < sampleSize; i++) {
+            ArrayList<Double> trainVect = new ArrayList<Double>();
+            trainVect.add(Math.random());
+            trainVect.add(Math.random());
+            DataSetRow te = new DataSetRow(trainVect);
+            dataSet.add(te);
+        }
+
+        NeuralNetAndDataSet controller = new NeuralNetAndDataSet(neuralNet, dataSet);
+
+        KohonenSampleTopComponent kohonenVisualizer = new KohonenSampleTopComponent();
+        kohonenVisualizer.setNeuralNetworkTrainingController(controller);
+        neuralNet.getLearningRule().addListener(kohonenVisualizer);
+
+        NeurophProjectFilesFactory.getDefault().createNeuralNetworkFile(neuralNet);
+        NeurophProjectFilesFactory.getDefault().createTrainingSetFile(dataSet);
+
+        kohonenVisualizer.setVisible(true);
+        kohonenVisualizer.open();
+        kohonenVisualizer.requestActive();
+    }    
 
     public void initialize(WizardDescriptor wiz) {
         this.wiz = wiz;

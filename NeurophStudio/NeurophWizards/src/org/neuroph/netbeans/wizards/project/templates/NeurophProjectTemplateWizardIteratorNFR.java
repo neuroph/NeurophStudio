@@ -19,9 +19,18 @@ import javax.swing.event.ChangeListener;
 import org.netbeans.api.project.ProjectManager;
 import org.netbeans.spi.project.ui.support.ProjectChooser;
 import org.netbeans.spi.project.ui.templates.support.Templates;
-import org.neuroph.netbeans.main.ViewManager;
+import org.neuroph.core.Layer;
+import org.neuroph.core.NeuralNetwork;
+import org.neuroph.core.Neuron;
+import org.neuroph.core.data.DataSet;
+import org.neuroph.core.data.DataSetRow;
+import org.neuroph.core.transfer.Trapezoid;
+import org.neuroph.netbeans.main.easyneurons.samples.NFRSampleTopComponent;
 import org.neuroph.netbeans.project.CurrentProject;
 import org.neuroph.netbeans.project.NeurophProject;
+import org.neuroph.netbeans.project.NeurophProjectFilesFactory;
+import org.neuroph.netbeans.visual.NeuralNetAndDataSet;
+import org.neuroph.nnet.NeuroFuzzyPerceptron;
 import org.openide.WizardDescriptor;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
@@ -84,7 +93,7 @@ public class NeurophProjectTemplateWizardIteratorNFR implements WizardDescriptor
         NeurophProject np = (NeurophProject) ProjectManager.getDefault().findProject(dir);
         //ProjectChooser.setProjectsFolder(dir);
         CurrentProject.getInstance().setCurrentProject(np);
-        ViewManager.getInstance().nfrSample();
+        nfrSample();
         return resultSet;
      //   return Collections.EMPTY_SET;
     }
@@ -220,4 +229,118 @@ public class NeurophProjectTemplateWizardIteratorNFR implements WizardDescriptor
         }
 
     }
+    
+  /**
+     * Opens NFRSample
+     */
+    public void nfrSample() {
+        double[][] pointsSets = {{0, 0, 20, 22}, // bad
+        {20, 22, 40, 42}, // good
+        {40, 42, 80, 82}, // very good
+        {80, 82, 100, 100}}; // excellent
+
+        double[][] timeSets = {{15, 15, 20, 25}, // fast
+        {20, 25, 35, 40}, // moderate
+        {35, 40, 1000, 1000}}; // slow
+
+        NeuralNetwork nnet = new NeuroFuzzyPerceptron(pointsSets, timeSets);
+        DataSet tSet = new DataSet(2, 4);
+
+        Layer setLayer = nnet.getLayerAt(1);
+
+        int outClass = 0;
+
+        for (int i = 0; i <= 3; i++) { // iterate points sets
+            Neuron icell = setLayer.getNeuronAt(i);
+            Trapezoid tfi = (Trapezoid) icell.getTransferFunction();
+            double r1i = tfi.getRightLow();
+            double l2i = tfi.getLeftHigh();
+            double r2i = tfi.getRightHigh();
+            double right_intersection_i = r2i + (r1i - r2i) / 2;
+
+            for (int j = 6; j >= 4; j--) { // iterate speed sets
+                Neuron jcell = setLayer.getNeuronAt(j);
+                Trapezoid tfj = (Trapezoid) jcell.getTransferFunction();
+
+                double r1j = tfj.getRightLow();
+                double l2j = tfj.getLeftHigh();
+                double r2j = tfj.getRightHigh();
+                double right_intersection_j = r2j + (r1j - r2j) / 2;
+
+                String outputPattern;
+                if (outClass <= 3) {
+                    outputPattern = "1 0 0 0";
+                } else if ((outClass >= 4) && (outClass <= 6)) {
+                    outputPattern = "0 1 0 0";
+                } else if ((outClass >= 7) && (outClass <= 9)) {
+                    outputPattern = "0 0 1 0";
+                } else {
+                    outputPattern = "0 0 0 1";
+                }
+
+                String inputPattern = Double.toString(l2i) + " "
+                        + Double.toString(l2j);
+                DataSetRow dataRow = new DataSetRow(
+                        inputPattern, outputPattern);
+                tSet.add(dataRow);
+
+                inputPattern = Double.toString(l2i) + " "
+                        + Double.toString(r2j);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
+
+                inputPattern = Double.toString(l2i) + " "
+                        + Double.toString(right_intersection_j);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
+
+                inputPattern = Double.toString(r2i) + " "
+                        + Double.toString(l2j);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
+
+                inputPattern = Double.toString(r2i) + " "
+                        + Double.toString(r2j);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
+
+                inputPattern = Double.toString(r2i) + " "
+                        + Double.toString(right_intersection_j);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
+
+                inputPattern = Double.toString(right_intersection_i) + " "
+                        + Double.toString(l2j);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
+
+                inputPattern = Double.toString(right_intersection_i) + " "
+                        + Double.toString(r2j);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
+
+                inputPattern = Double.toString(right_intersection_i) + " "
+                        + Double.toString(right_intersection_j);
+                dataRow = new DataSetRow(inputPattern, outputPattern);
+                tSet.add(dataRow);
+
+                outClass++;
+            } // for j
+
+        } // for i
+
+        nnet.setLabel("NFR sample");
+        tSet.setLabel("NFR tset");
+
+        NeuralNetAndDataSet controller = new NeuralNetAndDataSet(nnet, tSet);
+
+        NeurophProjectFilesFactory.getDefault().createNeuralNetworkFile(nnet);
+        NeurophProjectFilesFactory.getDefault().createTrainingSetFile(tSet);
+
+        NFRSampleTopComponent frame = new NFRSampleTopComponent();
+        frame.setNeuralNetworkTrainingController(controller);
+
+        frame.open();
+        frame.requestActive();
+    }    
 }
